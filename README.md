@@ -32,6 +32,7 @@ docker compose up --build
 ### Access Points
 - **Frontend**: http://localhost:3002
 - **Backend**: http://localhost:3001/api/health
+- **Firebase**: http://localhost:3004
 
 ## Development Workflow
 
