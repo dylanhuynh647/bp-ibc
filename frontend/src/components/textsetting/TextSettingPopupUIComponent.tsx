@@ -1,4 +1,4 @@
-import { useEffect, useRef, useContext, useState } from "react";
+import React, {useEffect, useRef, useContext, useState } from "react";
 import './TextSettingStyle.css'
 import { UIContext } from "../../context/UIContext";
 
@@ -19,6 +19,32 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
 
   const uiContext = useContext(UIContext);
   const element = uiContext?.state.selectedElement;
+  // Font Selector
+  const FONTS = [
+    "Arial",
+    "Verdana",
+    "Times New Roman",
+    "Courier New",
+    "Georgia",
+    "Palatino",
+    "Garamond",
+    "Bookman",
+    "Comic Sans MS",
+    "Trebuchet MS",
+    "Arial Black",
+    "Impact"
+  ];
+
+  function applyFontFamily(fontFamily: string){
+    if (!element) return;
+    element.style.setProperty('font-family', fontFamily);
+  }
+
+  function getCurrentFont(): string {
+    if (!element) return 'Arial';
+    const computed = window.getComputedStyle(element);
+    return computed.fontFamily.split(',')[0].replace(/['"]/g, '') || 'Arial';
+  }
   
   function toggleBold() {
 
@@ -102,7 +128,18 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
         </div>
         <div className='text-setting-popup-ui-component-section'>
             <div>
-              Style
+              Style 
+              <select
+                value={getCurrentFont()}
+                onChange={(e) => applyFontFamily(e.target.value)}
+                className="font-selector"
+              >
+                {FONTS.map((font) => (
+                  <option key={font} value={font} style={{ fontFamily: font }}>
+                    {font}
+                  </option>
+                ))}
+              </select>
             </div>
             <hr></hr>
             <div>
