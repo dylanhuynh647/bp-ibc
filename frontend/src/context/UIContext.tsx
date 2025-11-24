@@ -65,12 +65,28 @@ function UIContextProvider({ children }: { children: ReactNode }) {
             if (selection) {
                 selection.removeAllRanges();
                 selection.addRange(range);
-            } 
+            }
+
+            //event handler for keydowns (enter, shift enter)
+            const handleKeyDown = (e: KeyboardEvent) => {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    return;
+                }
+
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    element.blur()
+                }
+
+            }
+
+            element.addEventListener('keydown', handleKeyDown);
 
             const handleBlur = () => {
                 element.contentEditable = 'false';
                 element.style.border = '';
                 element.removeEventListener('blur', handleBlur);
+                element.removeEventListener('keydown', handleKeyDown);
             };
             element.addEventListener('blur', handleBlur);
         }
