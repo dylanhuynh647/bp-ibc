@@ -1,22 +1,15 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import type { ReactNode } from "react";
 import TextSettingPopupUIComponent from "../components/textsetting/TextSettingPopupUIComponent";
-
-type UIState = {
-    popupContent: string | null;
-    popupPosition: { x: number; y: number } | null;
-    selectedElement?: HTMLElement | null;
-}
-
-type UIAction =
-    | {type: "SHOW_POPUP"; payload: { content: string; element?: HTMLElement, position: { x: number; y: number }; }}
-    | {type: "HIDE_POPUP"}
+import type { UIAction } from "../model/uiActionModel";
+import type { UIState } from "../model/uiStateModel";
 
 const initialState: UIState = {
     popupContent: null,
     popupPosition: null,
     selectedElement: null,
 }
+const DOUBLE_CLICK_INTERVAL = 300; // milliseconds
 
 function uiReducer(state: UIState, action: UIAction): UIState {
     switch (action.type) {
@@ -33,8 +26,6 @@ export const UIContext = createContext<{
   state: UIState;
   dispatch: React.Dispatch<UIAction>;
 } | null>(null);
-
-const DOUBLE_CLICK_INTERVAL = 300; // milliseconds
 
 function UIContextProvider({ children }: { children: ReactNode }) {
     const [state, dispatch] = useReducer(uiReducer, initialState);
