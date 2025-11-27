@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { db } from './firebaseAdmin';
+import sectionRoute from './routes /sectionRoute';
 
 dotenv.config();
 
@@ -21,7 +21,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-app.get('/api/list-collections', async (req, res) => {
-  const collections = await db.listCollections();
-  res.json(collections.map(c => c.id));
-});
+app.use('/api', sectionRoute);

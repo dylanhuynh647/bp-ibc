@@ -1,0 +1,13 @@
+export interface SectionPostModel {
+  page_id: string;
+  section_num: number;
+  content: Record<string, any>;
+}
+
+export interface SectionGetModel {
+  id: string;                       
+  page_id: string;
+  section_num: number;
+  created_at: Date;                   
+  content: Record<string, any>;
+}
