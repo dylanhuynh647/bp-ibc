@@ -106,6 +106,50 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
+  const [alignment, setAlignmentState] = useState(() => {
+    if (!element) return 'left';
+    const computed = window.getComputedStyle(element);
+    return computed.textAlign || 'left';
+  });
+
+  useEffect(() => {
+    if (!element) return;
+    const computed = window.getComputedStyle(element);
+    const currentAlign = computed.textAlign || 'left';
+    setAlignmentState(currentAlign);
+  }, [element]);
+
+  function setAlignment(alignment: string){
+    if (!element) return;
+    
+    const computed = window.getComputedStyle(element);
+    const display = computed.display;
+    
+    if (display === 'inline' || display === 'inline-flex' || display === 'inline-block') {
+      const parent = element.parentElement;
+      
+      let wrapper = parent?.hasAttribute('data-alignment-wrapper') ? parent : null;
+      
+      if (!wrapper && parent) {
+        wrapper = document.createElement('div');
+        wrapper.setAttribute('data-alignment-wrapper', 'true');
+        wrapper.style.display = 'inline-block';
+        wrapper.style.width = '100%';
+        
+        parent.insertBefore(wrapper, element);
+        wrapper.appendChild(element);
+      }
+      
+      if (wrapper) {
+        wrapper.style.textAlign = alignment;
+      }
+    } else {
+      element.style.textAlign = alignment;
+    }
+    
+    setAlignmentState(alignment);
+  }
+
   return (
     <div ref={popupRef} id="text-setting-popup-ui-component" className="text-setting-popup-ui-component" style={{ position: 'absolute', top: position?.y ?? 100, left: position?.x ?? 100 }}>
         <div>
@@ -152,9 +196,16 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
               </ul>
             </div>
             <hr></hr>
-            <div>Alignment</div>
+            <div>
+            Alignment
+              <select value={alignment} onChange={(e) => setAlignment(e.target.value)}>
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+              </select>
+            </div>
         </div>
-    </div>
+      </div>
   );
 }
 
