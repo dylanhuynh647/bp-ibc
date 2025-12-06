@@ -31,17 +31,40 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
     const computed = window.getComputedStyle(element);
     return computed.fontFamily.split(',')[0].replace(/['"]/g, '') || 'Arial';
   }
+
+  const [fontWeight, setFontWeight] = useState(element ? Number(window.getComputedStyle(element).fontWeight) : 400);
   
   function toggleBold() {
 
     if (!element) return;
-
-    const computed = window.getComputedStyle(element);
-    const fontWeight = computed.fontWeight ?? '';
-    const isBold = fontWeight === 'bold' || Number(fontWeight) >= 700;
+    const isBold = fontWeight >= 700;
+    const newFontWeight = isBold ? 400 : 700;
 
     element.style.setProperty('font-weight', isBold ? 'normal' : 'bold');
+    setFontWeight(newFontWeight);
+  }
 
+  const changeFontWeight = (e : React.KeyboardEvent<HTMLInputElement>) => {
+    //get current fontweight, if null, set to default fontWeight (400)
+    
+    if (e.key == "Enter") {
+      if (fontWeight >= 100 && fontWeight <=900) {
+        if (!element) return;
+        else {
+          element.style.setProperty('font-weight', fontWeight + "");
+        }
+      }
+    }
+  }
+  
+  function incrementFontWeight(type : String) {
+    const incAmt = (type == "dec") ? -100 : 100;
+    const newFontWeight = fontWeight + incAmt; //local scope, if out of range of conditional, will not affect fontWeight
+    if (newFontWeight >= 100 && newFontWeight <= 900) {
+      if (!element) return;
+      setFontWeight(newFontWeight);
+      element.style.setProperty('font-weight', newFontWeight + "");
+    }
   }
 
   function toggleItalic() {
