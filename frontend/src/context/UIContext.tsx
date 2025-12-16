@@ -49,6 +49,9 @@ function UIContextProvider({ children }: { children: ReactNode }) {
             element.style.border = '2px solid blue';
             element.focus();
 
+            // get initial text 
+            const initialText = element.innerText;
+
             // highlight all text in the textbox on edit
             const range = document.createRange();
             range.selectNodeContents(element);
@@ -57,6 +60,18 @@ function UIContextProvider({ children }: { children: ReactNode }) {
                 selection.removeAllRanges();
                 selection.addRange(range);
             }
+
+            // event handler for changes to text 
+            const handleTextChanges = () => {
+                // change border if text has been edited, otherwise keep original color (blue)
+                if (element.innerText !== initialText) {
+                    element.style.border = '5px solid #FFD700';
+                } else {
+                    element.style.border = '2 px solid blue';
+                }
+            }
+
+            element.addEventListener('input', handleTextChanges);
 
             //event handler for keydowns (enter, shift enter)
             const handleKeyDown = (e: KeyboardEvent) => {
@@ -76,6 +91,7 @@ function UIContextProvider({ children }: { children: ReactNode }) {
             const handleBlur = () => {
                 element.contentEditable = 'false';
                 element.style.border = '';
+                element.removeEventListener('input', handleTextChanges);
                 element.removeEventListener('blur', handleBlur);
                 element.removeEventListener('keydown', handleKeyDown);
             };
