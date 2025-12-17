@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import sectionRoute from './routes/sectionRoute';
+import pageRoute from './routes/pageRoute'
+import draftRoute from './routes/draftRoute'
 
 dotenv.config();
 
@@ -22,3 +24,5 @@ app.listen(PORT, () => {
 });
 
 app.use('/api', sectionRoute);
+app.use('/api', pageRoute);
+app.use('/api', draftRoute);
