@@ -11,19 +11,62 @@ interface TextSettingPopupUIProps {
 
 function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIProps) {
   const popupRef = useRef<HTMLDivElement>(null);
-
-  // Styling implementation goes here:
-  // read the selected element from UIContext and apply styles.
-  // Example:
-  // const element = uiContext?.state.selectedElement;
-  // element?.style.setProperty(property, value);
-
+  const savedSelectionRef = useRef<Range | null>(null);
   const uiContext = useContext(UIContext);
-  const element = uiContext?.state.selectedElement;
+  const state = uiContext?.state;
+
+  if (!state) return;
+  const element = state.selectedElement;
+
+  // states
+  const [fontWeight, setFontWeight] = useState(element ? Number(window.getComputedStyle(element).fontWeight) : 400); // font weight / bold 
+  const [fontSize, setFontSize] = useState(element ? parseFloat(window.getComputedStyle(element).fontSize) : Number(12));  // font size 
+  const [italics, toggleItalics] = useState(false);
+  const [underline, toggleUnderline] = useState(false);
+  const [alignment, setAlignmentState] = useState(element ? (window.getComputedStyle(element).textAlign) : 'left'); // text alignment 
+  
+
+  // apply style to specific highlighted chars
+  const applyStyleToSelection = (property: string, value: string) => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) {
+            if (element) {
+                element.style.setProperty(property, value);
+            }
+            return;
+        }
+
+        const range = selection.getRangeAt(0);
+        
+        if (range.collapsed) {
+            if (element) {
+                element.style.setProperty(property, value);
+            }
+            return;
+        }
+
+        const span = document.createElement('span');
+        console.log(span);
+        span.style.setProperty(property, value);
+        
+        try {
+            const contents = range.extractContents();
+            span.appendChild(contents);
+            range.insertNode(span);
+            
+            const newRange = document.createRange();
+            newRange.selectNodeContents(span);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+            
+            savedSelectionRef.current = newRange;
+        } catch (e) {
+            console.error('Error applying style to selection:', e);
+        }
+    };
 
   function applyFontFamily(fontFamily: string){
-    if (!element) return;
-    element.style.setProperty('font-family', fontFamily);
+    applyStyleToSelection('font-family', fontFamily);
   }
 
   function getCurrentFont(): string {
@@ -32,16 +75,6 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
     return computed.fontFamily.split(',')[0].replace(/['"]/g, '') || 'Arial';
   }
 
-  const [fontWeight, setFontWeight] = useState(element ? Number(window.getComputedStyle(element).fontWeight) : 400);
-  
-  function toggleBold() {
-    if (!element) return;
-    const isBold = fontWeight >= 700;
-    const newFontWeight = isBold ? 400 : 700;
-
-    element.style.setProperty('font-weight', isBold ? 'normal' : 'bold');
-    setFontWeight(newFontWeight);
-  }
 
   const changeFontWeight = (e : React.KeyboardEvent<HTMLInputElement>) => {
     //get current fontweight, if null, set to default fontWeight (400)
@@ -60,42 +93,36 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
     const incAmt = (type == "dec") ? -100 : 100;
     const newFontWeight = fontWeight + incAmt; //local scope, if out of range of conditional, will not affect fontWeight
     if (newFontWeight >= 100 && newFontWeight <= 900) {
-      if (!element) return;
       setFontWeight(newFontWeight);
-      element.style.setProperty('font-weight', newFontWeight + "");
+      applyStyleToSelection('font-weight', newFontWeight.toString());
     }
   }
 
+  function toggleBold() {
+    const isBold = fontWeight >= 700;
+    setFontWeight(isBold ? 400 : 700)
+    applyStyleToSelection('font-weight', isBold ? '400' : '700');
+  }
+
   function toggleItalic() {
-    if (!element) return;
-
-    const computed = window.getComputedStyle(element);
-    const isItalic = computed.fontStyle === 'italic';
-
-    element.style.setProperty('font-style', isItalic ? 'normal' : 'italic');
+    const nextState = !italics;
+    toggleItalics(nextState);
+    applyStyleToSelection('font-style', nextState ? 'italic' : 'normal');
   }
 
   function toggleUnderlined() {
-    if (!element) return;
-
-    const computed = window.getComputedStyle(element);
-    const textDecLine = computed.textDecoration ?? '';
-    const isUnderline = textDecLine.includes('underline');
-
-    element.style.setProperty('text-decoration', isUnderline ? 'none' : 'underline');
+    const nextState = !underline;
+    toggleUnderline(nextState);
+    applyStyleToSelection('text-decoration-line', nextState ? 'underline' : 'none');
   }
-  
-  // gets font from element, if it doesn't exist set default font to be 12
-  const [fontSize, setFont] = useState(element ? parseFloat(window.getComputedStyle(element).fontSize) : Number(12)); 
 
-    // using buttons to increment/decrement 
+  // using buttons to increment/decrement 
   function incrementFont(type : String) {
     const amount = (type == 'dec') ? -0.1 : 0.1;
     const newFont = Number((fontSize + amount).toFixed(1));
     if (newFont >= 1 && newFont <= 100) {
-      setFont(newFont);
-      if (!element) return;
-      element.style.setProperty('font-size', `${newFont}px`);
+      setFontSize(newFont);
+      applyStyleToSelection('font-size', newFont.toString() + 'px');
     }
   }
 
@@ -103,8 +130,8 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
   const changeFont = (e : React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key == "Enter") {
         if (fontSize >= 1 && fontSize <= 100) {
-          if (!element) return;
-          element.style.setProperty('font-size', `${fontSize}px`);
+          setFontSize(fontSize);
+          applyStyleToSelection('font-size', fontSize + 'px');
         }
       }
     };
@@ -127,12 +154,6 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
-
-  const [alignment, setAlignmentState] = useState(() => {
-    if (!element) return 'left';
-    const computed = window.getComputedStyle(element);
-    return computed.textAlign || 'left';
-  });
 
   useEffect(() => {
     if (!element) return;
@@ -200,7 +221,7 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
             <hr></hr>
             <div style={{display: 'flex'}}>
               <button onClick={() => incrementFont('dec')}>-</button>
-              <input type="number" value={fontSize} min="1" max="100" step="0.1" onChange={(e) => setFont(Number(e.target.value))} onKeyDown={(e) => changeFont(e)} style={{display: 'flex', textAlign: 'center'}}/>
+              <input type="number" value={fontSize} min="1" max="100" step="0.1" onChange={(e) => setFontSize(Number(e.target.value))} onKeyDown={(e) => changeFont(e)} style={{display: 'flex', textAlign: 'center'}}/>
               <button onClick={() => incrementFont('inc')}>+</button>
             </div>
             <hr></hr>
