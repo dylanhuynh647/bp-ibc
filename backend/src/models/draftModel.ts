@@ -9,3 +9,8 @@ export interface DraftGetModel {
     sections: DraftSection[];
     version: number;
 }
+
+export interface DraftPostModel {
+    sections: DraftSection[];
+    version: number;
+}
