@@ -1,5 +1,5 @@
 import { db } from "../firebaseAdmin";
-import { DraftGetModel } from "../models/draftModel";
+import { DraftGetModel, DraftPostModel } from "../models/draftModel";
 
 const draftsCollection = db.collection('drafts');
 
@@ -11,6 +11,26 @@ export async function getDraftById(id: string): Promise<DraftGetModel | null> {
     if (!documentSnapshot.exists) {
         return null;
     }
+
+    return {
+        id: documentRef.id,
+        created_at: documentSnapshot.data()!.created_at.toDate(),
+        sections: documentSnapshot.data()!.sections || [],
+        version: documentSnapshot.data()!.version,
+    };
+}
+
+//Post draft
+export async function createDraft(draftData: DraftPostModel): Promise<DraftGetModel> {
+
+    const date = new Date();
+
+    const documentRef = await draftsCollection.add({
+        created_at: date,
+        ...draftData
+    });
+
+    const documentSnapshot = await documentRef.get();
 
     return {
         id: documentRef.id,
