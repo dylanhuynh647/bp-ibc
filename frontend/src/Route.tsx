@@ -8,7 +8,7 @@ import App from './App';
 export default function AppRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/" element={<Navigate to="/edit" replace />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/education" element={<EducationPage />} />
