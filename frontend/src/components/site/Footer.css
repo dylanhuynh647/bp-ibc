@@ -1,0 +1,42 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #25374D;
+    width: 100%;
+    padding: 16px 8px;
+    text-align: center;
+}
+
+.footerDesc1 {
+    font-weight: 500;
+    font-size: 42px;
+    color: #DCDACD;
+}
+
+.footerDesc2 {
+    font-weight: 300;
+    font-size: 32px;
+    color: #DCDACD;
+}
+
+footer p {
+    color: #FFFFFF;
+}
+
+.facebook {
+    padding-left: 20px;
+    font-weight: 500;
+    font-size: 27px;
+    padding-right: 40px;
+}
+
+footer div a {
+    text-decoration: none;
+}
+
+.ibc {
+    font-weight: 400;
+    font-size: 27px;
+    padding-left: 40px;
+}
