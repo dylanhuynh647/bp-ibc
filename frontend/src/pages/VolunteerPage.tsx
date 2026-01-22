@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import Footer from '../components/site/Footer'; 
 import './VolunteerPage.css'; 
 import exclamationMark from '../assets/exclamation-mark.svg';
 import whiteArrow from '../assets/white-arrow.svg'; 
 import greenBg from '../assets/green-backdrop.svg'; 
 
+=======
+import Navbar from '../components/site/Navbar'
+import Footer from '../components/site/Footer'
+>>>>>>> main
 
 function VolunteerPage() {
 
@@ -13,6 +18,7 @@ function VolunteerPage() {
 
     return (
         <>
+<<<<<<< HEAD
             <div id="info-sec" style={{backgroundColor: "#f5edea", height: "400px", margin: "0"}}>
                 <div id="info-text-container">
                     <h1 className="headerOne" style={{color: "#324436"}}>Volunteer With Us</h1>
@@ -53,6 +59,11 @@ function VolunteerPage() {
                 </div>
 
             </div>
+=======
+            <Navbar/> 
+            <h1>Welcome to the Volunteer Page</h1>
+            <p>This is the main content area.</p>
+>>>>>>> main
             <Footer/>
         </>
     )
