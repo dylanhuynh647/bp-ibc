@@ -11,8 +11,6 @@ function WildlifeGuide () {
             <p className="subtext">If you've found a wild animal, it's important to pause before taking action. 
                                     Many animals that appear abandoned or injured are behaving normally. 
                                     This page will help you decide what to do - safely and responsibly.</p>
-            {/* <p className="subtext">that appear abandoned or injured are behaving normally. This page will help you decide</p>
-            <p className="subtext">what to do - safely and responsibly.</p> */}
         </section>
     );
 }
