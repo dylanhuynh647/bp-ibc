@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 type LoadFromLocalAutoSaveProps = {
   storageKey: string;
+  sharedStorageKey?: string;
   useDefaultTemplate?: boolean;
   rootRef?: RefObject<HTMLElement | null>;
   ready?: boolean;
@@ -16,6 +17,7 @@ const placeholderSnippets = [
 
 function LoadFromLocalAutoSave({
   storageKey,
+  sharedStorageKey,
   useDefaultTemplate = false,
   rootRef,
   ready = true,
@@ -31,9 +33,12 @@ function LoadFromLocalAutoSave({
 
     const root = rootRef?.current ?? document.body;
 
-    const applySnapshot = (targetKey: string, selector: string) => {
+    const applySnapshot = (targetKey: string, selector: string, isShared = false) => {
       const rawSaved = localStorage.getItem(targetKey);
       if (!rawSaved) {
+        if (isShared) {
+          console.log('[Autosave] No shared components saved yet');
+        }
         return;
       }
 
@@ -98,15 +103,25 @@ function LoadFromLocalAutoSave({
         return;
       }
 
-      const editableMap = new Map(
+      const editableMap = new Map<string, Element>(
         editableElements
-          .map((element) => [element.getAttribute('data-editable-id') ?? '', element])
+          .map((element) => [element.getAttribute('data-editable-id') ?? '', element] as [string, Element])
           .filter(([key]) => key)
       );
+
+      if (isShared) {
+        console.log(`[Autosave] Shared - Found ${editableElements.length} editable elements in DOM`);
+        console.log(`[Autosave] Shared - Trying to restore ${savedElements.length} saved elements`);
+        const matched = savedElements.filter(v => editableMap.has(v.id)).length;
+        console.log(`[Autosave] Shared - ${matched} elements matched by ID`);
+      }
 
       const shouldApply = savedElements.some((value) => {
         const target = editableMap.get(value.id);
         if (!target) {
+          if (isShared) {
+            console.log(`[Autosave] Shared - Cannot find element with ID: ${value.id}`);
+          }
           return false;
         }
 
@@ -114,19 +129,57 @@ function LoadFromLocalAutoSave({
       });
 
       if (!shouldApply) {
-        return;
+        return 0;
       }
 
+      let appliedCount = 0;
       savedElements.forEach((value) => {
         const target = editableMap.get(value.id);
         if (target) {
           target.textContent = value.text;
+          appliedCount++;
         }
       });
+      
+      if (isShared) {
+        console.log(`[Autosave] Shared - Applied ${appliedCount} changes`);
+      }
+      
+      return appliedCount;
     };
 
-    applySnapshot(storageKey, '[data-editable][data-editable-leaf="true"]');
-  }, [storageKey, useDefaultTemplate, ready, rootRef]);
+    const timeouts: number[] = [];
+
+    // Apply page-specific snapshot with retry
+    const pageApplied = applySnapshot(storageKey, '[data-editable][data-editable-leaf="true"]', false);
+    console.log(`[Autosave] Page - Applied ${pageApplied} changes on initial load`);
+    
+    // Retry page-specific after short delay if not all elements loaded
+    const pageRetryTimeout = setTimeout(() => {
+      const retryCount = applySnapshot(storageKey, '[data-editable][data-editable-leaf="true"]', false);
+      if (retryCount && retryCount > 0) {
+        console.log(`[Autosave] Page - Applied ${retryCount} additional changes on retry`);
+      }
+    }, 100);
+    timeouts.push(pageRetryTimeout);
+    
+    // Apply shared components snapshot with retry
+    if (sharedStorageKey) {
+      // Try immediately first
+      applySnapshot(sharedStorageKey, '[data-editable][data-editable-leaf="true"]', true);
+      
+      // Also retry after a short delay in case elements weren't ready
+      const sharedRetryTimeout = setTimeout(() => {
+        console.log('[Autosave] Retrying shared component restore...');
+        applySnapshot(sharedStorageKey, '[data-editable][data-editable-leaf="true"]', true);
+      }, 100);
+      timeouts.push(sharedRetryTimeout);
+    }
+    
+    return () => {
+      timeouts.forEach(clearTimeout);
+    };
+  }, [storageKey, sharedStorageKey, useDefaultTemplate, ready, rootRef]);
 
   return null;
 }

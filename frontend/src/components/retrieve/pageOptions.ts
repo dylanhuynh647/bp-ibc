@@ -1,3 +1,4 @@
+import type React from 'react';
 import AboutPage from '../../pages/AboutPage';
 import EducationPage from '../../pages/EducationPage';
 import VolunteerPage from '../../pages/VolunteerPage';
@@ -7,7 +8,7 @@ export type PageOption = {
   id: string;
   label: string;
   route: string;
-  Component: () => JSX.Element;
+  Component: () => React.JSX.Element;
 };
 
 export const AVAILABLE_PAGES: PageOption[] = [

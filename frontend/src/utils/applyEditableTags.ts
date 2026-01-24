@@ -18,13 +18,13 @@ function getElementPath(element: HTMLElement, root: HTMLElement) {
   let current: HTMLElement | null = element;
 
   while (current && current !== root) {
-    const parent = current.parentElement;
+    const parent: HTMLElement | null = current.parentElement;
     if (!parent) {
       break;
     }
 
     const siblings = Array.from(parent.children).filter(
-      (child) => child.tagName === current?.tagName
+      (child): child is Element => (child as Element).tagName === current?.tagName
     );
     const index = siblings.indexOf(current);
     segments.unshift(`${current.tagName.toLowerCase()}:${index}`);
@@ -120,6 +120,17 @@ export function applyEditableTags(root: HTMLElement = document.body) {
   });
 
   return editableElements.length;
+}
+
+export function isSharedComponent(element: HTMLElement): boolean {
+  // Check if element is inside a shared component like Navbar or Footer
+  const sharedSelectors = ['nav', 'footer'];
+  for (const selector of sharedSelectors) {
+    if (element.closest(selector)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function disableEditorLinks(root: HTMLElement = document.body) {

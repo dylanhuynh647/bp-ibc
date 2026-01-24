@@ -13,14 +13,21 @@ function EditorPage() {
   const { id } = useParams();
   const pageOption = getPageOption(id);
   const storageKey = `bp-ibc:autosave:${pageOption.id}`;
+  const sharedStorageKey = 'bp-ibc:autosave:shared';
   const [editableReady, setEditableReady] = useState(false);
   const frameRef = useRef<HTMLDivElement | null>(null);
 
-  useLocalAutoSave(storageKey, frameRef);
+  useLocalAutoSave(storageKey, sharedStorageKey, frameRef);
   const PageComponent = pageOption.Component;
 
   const handleClearDraft = () => {
     localStorage.removeItem(storageKey);
+    window.location.reload(); // Reload to show original content
+  };
+
+  const handleClearSharedDraft = () => {
+    localStorage.removeItem(sharedStorageKey);
+    window.location.reload(); // Reload to show original content
   };
 
   useEffect(() => {
@@ -94,8 +101,17 @@ function EditorPage() {
               type="button"
               className="editor-button editor-button--ghost"
               onClick={handleClearDraft}
+              title="Clear this page's draft only"
             >
-              Clear draft
+              Clear page draft
+            </button>
+            <button
+              type="button"
+              className="editor-button editor-button--ghost"
+              onClick={handleClearSharedDraft}
+              title="Clear navbar and footer drafts (affects all pages)"
+            >
+              Clear shared draft
             </button>
             <SaveButton />
           </div>
@@ -105,6 +121,7 @@ function EditorPage() {
             <PageComponent />
             <LoadFromLocalAutoSave
               storageKey={storageKey}
+              sharedStorageKey={sharedStorageKey}
               rootRef={frameRef}
               ready={editableReady}
             />

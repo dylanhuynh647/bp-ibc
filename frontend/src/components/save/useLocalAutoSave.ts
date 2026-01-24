@@ -7,6 +7,7 @@ const legacyKeyPrefix = 'Saved Element #';
 
 function useLocalAutoSave(
   storageKey: string,
+  sharedStorageKey: string,
   rootRef?: RefObject<HTMLElement | null>
 ) {
   useEffect(() => {
@@ -22,13 +23,33 @@ function useLocalAutoSave(
         return;
       }
 
-      const pageSnapshot = pageElements.map((editableElement) => ({
-        id: editableElement.getAttribute('data-editable-id') ?? '',
-        text: editableElement.textContent ?? '',
-      }));
+      const pageSnapshot: Array<{ id: string; text: string }> = [];
+      const sharedSnapshot: Array<{ id: string; text: string }> = [];
+
+      pageElements.forEach((editableElement) => {
+        const data = {
+          id: editableElement.getAttribute('data-editable-id') ?? '',
+          text: editableElement.textContent ?? '',
+        };
+
+        // Check if element is inside nav or footer
+        const isShared = editableElement.closest('nav') || editableElement.closest('footer');
+        
+        if (isShared) {
+          sharedSnapshot.push(data);
+        } else {
+          pageSnapshot.push(data);
+        }
+      });
 
       try {
         localStorage.setItem(storageKey, JSON.stringify(pageSnapshot));
+        localStorage.setItem(sharedStorageKey, JSON.stringify(sharedSnapshot));
+        
+        if (sharedSnapshot.length > 0) {
+          console.log(`[Autosave] Saved ${sharedSnapshot.length} shared component elements:`, 
+            sharedSnapshot.map(s => ({ id: s.id, text: s.text.substring(0, 30) })));
+        }
 
         Object.keys(localStorage)
           .filter((key) => key.startsWith(legacyKeyPrefix))
@@ -55,7 +76,7 @@ function useLocalAutoSave(
       clearInterval(localAutoSaveCall);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [storageKey, rootRef]);
+  }, [storageKey, sharedStorageKey, rootRef]);
 }
 
 export default useLocalAutoSave;
