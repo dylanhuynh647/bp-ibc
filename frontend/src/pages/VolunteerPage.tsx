@@ -1,6 +1,5 @@
 import Navbar from '../components/site/Navbar'
 import Footer from '../components/site/Footer'
-
 function VolunteerPage() {
     return (
         <>
