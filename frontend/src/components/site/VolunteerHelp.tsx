@@ -1,27 +1,36 @@
-import { NavLink } from "react-router-dom"
-import './Navbar.css'
-import ibc_logo from '../../assets/logo.svg'
+import './VolunteerHelp.css'
 
-function Navbar() {
+function VolunteerHelp() {
     return (
-        <nav>
-            <div className="logo" style={{display: 'flex', fontFamily: 'DM Sans, sans-serif'}}>
-                <img src={ibc_logo} alt="ibc logo"/>
-                <div>
-                    <h1>Itty Bitty</h1>
-                    <h1>Critters</h1>
+        <div className="ways_you_can_help">
+            <h1 style={{fontSize: '60px', fontWeight: '500'}}>Ways You Can Help</h1>
+            <div className="help_info_containers">
+                <div className="help_info_container">
+                    <h2>Education & Outreach Support</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eu</p>
+                </div>
+                <div className="help_info_container">
+                    <h2>Administrative Assistance</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh eu</p>
+                </div>
+                <div className="help_info_container">
+                    <h2>Event or Fundraising Help</h2>
+                    <p>Lorem ipsum dolor sit amet consectetuer adipiscing elit, sed diam nonummy nibh eu consectetuer adipiscing elit</p>
                 </div>
             </div>
-            <div className="navlinks" style={{fontFamily: 'DM Sans, sans-serif'}}>
-                <NavLink to="/home" className={({ isActive }) => isActive ? "nav-a active" : "nav-a"}>Home</NavLink>
-                <NavLink to="/about" className={({ isActive }) => isActive ? "nav-a active" : "nav-a"}>About</NavLink>
-                <NavLink to="/education" className={({ isActive }) => isActive ? "nav-a active" : "nav-a"}>Education</NavLink>
-                <NavLink to="/volunteer" className={({ isActive }) => isActive ? "nav-a active" : "nav-a"}>Volunteer</NavLink>
-                <NavLink to="/" className={({ isActive }) => isActive ? "nav-a active" : "nav-a"}>Contact</NavLink>
-                <NavLink to="/" className={({ isActive }) => isActive ? "nav-a active log-in" : "nav-a log-in"}>Log in</NavLink>
+            <h1 style={{fontSize: '60px', fontWeight: '500', marginTop: '100px'}}>What We Look For in Volunteers</h1>
+            <div className="volunteer_attributes">
+                <ul>
+                    <li>Compassionate and calm</li>
+                    <li>Reliable and respectful of guidelines</li>
+                </ul>
+                <ul>
+                    <li>Comfortable working as part of a team</li>
+                    <li>Open to learning — and unlearning — common wildlife misconceptions</li>
+                </ul>
             </div>
-        </nav>
-    );
+        </div>
+    )
 }
 
-export default Navbar;
+export default VolunteerHelp;

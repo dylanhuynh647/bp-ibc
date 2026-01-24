@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
 .ways_you_can_help {
+    font-family: 'DM Sans', 'sans-serif';
     color: #324436;
     background-color: #F5EDEA;
     padding: 16px 8px;
