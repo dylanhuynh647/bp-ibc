@@ -22,8 +22,6 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
   // states
   const [fontWeight, setFontWeight] = useState(element ? Number(window.getComputedStyle(element).fontWeight) : 400); // font weight / bold 
   const [fontSize, setFontSize] = useState(element ? parseFloat(window.getComputedStyle(element).fontSize) : Number(12));  // font size 
-  const [italics, toggleItalics] = useState(false);
-  const [underline, toggleUnderline] = useState(false);
   const [alignment, setAlignmentState] = useState(element ? (window.getComputedStyle(element).textAlign) : 'left'); // text alignment 
   
   const OFFVAL = "0"; // constant because not sure if "0" or "-1" is better for off, needs to be a string to hold value (ex. bold 700)
@@ -131,13 +129,12 @@ function TextSettingPopupUIComponent({ position, onClose}: TextSettingPopupUIPro
     if(!isInvertible.includes(style) || updates.length == 0) return false;
     let started = false, fullOverlap = true;
     let state = OFFVAL;
-    let curIdx = updates[0].idx, i = 0;
+    let i = 0;
     while(i < updates.length) {
       if(updates[i].idx > start) started = true;
       if(started == true && state == OFFVAL) fullOverlap = false;
       if(updates[i].idx > end) return fullOverlap;
       if(updates[i].style == style) state = updates[i].val || OFFVAL;
-      curIdx = updates[i].idx;
       i++;
     }
     if(started == false || updates[updates.length-1].idx < end) return false; // never started, thus can't overlap
