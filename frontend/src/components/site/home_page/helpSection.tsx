@@ -2,7 +2,7 @@ import './homepageSection.css';
 function HelpSection(){
     return (
         <section id="help-section">
-            <div>
+            <div className="homepage-green">
                 <h2>How Itty Bitty Critter Helps</h2>
                 <div>
                     <div className="card-content">

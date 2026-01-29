@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 * {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
     font-family: "DM Sans", sans-serif;
@@ -104,6 +106,11 @@ li {
     font-weight: 600;
 }
 
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
 #do-not-card {
     width: 1600px;
     height: 572px;
@@ -121,7 +128,3 @@ li {
     left: 1182.93px;
 }
 
-#icon {
-    width: 40px;
-    height: 40px;
-}
