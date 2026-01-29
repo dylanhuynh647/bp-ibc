@@ -1,12 +1,16 @@
 import Navbar from '../components/site/Navbar'
 import Footer from '../components/site/Footer'
+import FoundAnimal from '../components/site/home_page/foundAnimalSection'
+import DoNot from '../components/site/home_page/doNotSection'
+import Help from '../components/site/home_page/helpSection'
 
 function HomePage() {
     return (
         <>
             <Navbar/> 
-            <h1>Welcome to the Home Page</h1>
-            <p>This is the main content area.</p>
+            <FoundAnimal/>
+            <DoNot/>
+            <Help/>
             <Footer/> 
         </>
     )
