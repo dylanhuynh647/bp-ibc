@@ -1,3 +1,5 @@
+import HowItHelps from "../components/site/HowItHelps";
+import CallToAction from "../components/site/CallToAction";
 import Footer from '../components/site/Footer'
 
 function HomePage() {
@@ -5,6 +7,8 @@ function HomePage() {
         <>
             <h1>Welcome to the Home Page</h1>
             <p>This is the main content area.</p>
+            <HowItHelps/>
+            <CallToAction/>
             <Footer/> 
         </>
     )
