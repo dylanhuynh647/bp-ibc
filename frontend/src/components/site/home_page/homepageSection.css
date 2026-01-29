@@ -13,12 +13,36 @@ section {
     background-color: #f5edea;
 }
 
+h1 {
+    color: #FFFFFF;
+    font-size: 90px;
+    font-weight: 700;
+    top: 382.85px;
+    left: 168.28px; 
+}
+
 h2 {
     color: #324436;
     font-size: 90px;
     font-weight: 700;
     top: 118.63px;
     left: 158.28px;
+}
+
+h3 {
+    color: #DCDACD;
+    font-size: 60px;
+    font-weight: 500;
+    top: 1961px;
+    left: 597px;
+}
+
+h4 {
+    color: #DCDACD;
+    font-size: 38px;
+    font-weight: 400;
+    top: 536.02px;
+    left: 164.13px;
 }
 
 p {
@@ -28,4 +52,76 @@ p {
     font-weight: 400;
     top: 271.8px;
     left: 164.13px;
+}
+
+li {
+    color: #324436;
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.homepage-green {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 1992px;
+    height: 886px;
+    top: 228px;
+    left: -36px;
+    background-color: #324436;
+}
+
+.homepage-green a {
+    border-bottom: 2px solid #FFFFFF;
+}
+
+.homepage-white {
+    width: 1915px;
+    height: 553.09px;
+    top: 228px;
+    left: 0px;
+    background-color: #FFFFFF;
+}
+
+.homepage-white a{
+    border-bottom: 2px solid #357B8F;
+}
+
+.card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 530px;
+    height: 400px;
+    background-color: #F5EDEA;
+    border-radius: 16px;
+}
+
+.card-title {
+    color:#324436;
+    font-size: 41.3px;
+    font-weight: 600;
+}
+
+#do-not-card {
+    width: 1600px;
+    height: 572px;
+    top: 1194.15px;
+    left: 153.6px;
+    background-color: #FFFFFF;
+    border-top: 7px solid #357B8F;
+    border-radius: 16px;
+}
+
+#main-image {
+    width: 600px;
+    height: 450px;
+    top: 431.67px;
+    left: 1182.93px;
+}
+
+#icon {
+    width: 40px;
+    height: 40px;
 }

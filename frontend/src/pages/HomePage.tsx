@@ -7,11 +7,11 @@ import Help from '../components/site/home_page/helpSection'
 function HomePage() {
     return (
         <>
-            <Navbar/> 
-            {/*<FoundAnimal/>*/}
-            {/*<DoNot/>*/}
-            {/*<Help/>*/}
-            <Footer/> 
+            <Navbar/>
+            <FoundAnimal/>
+            <DoNot/>
+            <Help/>
+            <Footer/>
         </>
     )
 }
