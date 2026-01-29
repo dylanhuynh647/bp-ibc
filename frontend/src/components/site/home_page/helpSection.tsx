@@ -1,4 +1,4 @@
-import 'homepageSection.css';
+import './homepageSection.css';
 function HelpSection(){
     return (
         <section id="help-section">
