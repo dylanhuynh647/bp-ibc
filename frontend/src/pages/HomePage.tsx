@@ -8,9 +8,9 @@ function HomePage() {
     return (
         <>
             <Navbar/>
-            <FoundAnimal/>
+            {/*<FoundAnimal/>
             <DoNot/>
-            <Help/>
+            <Help/>*/}
             <Footer/>
         </>
     )

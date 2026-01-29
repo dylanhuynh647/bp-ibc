@@ -6,7 +6,6 @@
     margin: 0;
     padding: 0;
     font-family: "DM Sans", sans-serif;
-    position: absolute;
 }
 
 section {
@@ -19,32 +18,24 @@ h1 {
     color: #FFFFFF;
     font-size: 90px;
     font-weight: 700;
-    top: 382.85px;
-    left: 168.28px; 
 }
 
 h2 {
     color: #324436;
     font-size: 90px;
     font-weight: 700;
-    top: 118.63px;
-    left: 158.28px;
 }
 
 h3 {
     color: #DCDACD;
     font-size: 60px;
     font-weight: 500;
-    top: 1961px;
-    left: 597px;
 }
 
 h4 {
     color: #DCDACD;
     font-size: 38px;
     font-weight: 400;
-    top: 536.02px;
-    left: 164.13px;
 }
 
 p {
@@ -52,8 +43,6 @@ p {
     color: #324436;
     font-size: 30px;
     font-weight: 400;
-    top: 271.8px;
-    left: 164.13px;
 }
 
 li {
@@ -69,8 +58,6 @@ li {
     gap: 20px;
     width: 1992px;
     height: 886px;
-    top: 228px;
-    left: -36px;
     background-color: #324436;
 }
 
@@ -81,8 +68,6 @@ li {
 .homepage-white {
     width: 1915px;
     height: 553.09px;
-    top: 228px;
-    left: 0px;
     background-color: #FFFFFF;
 }
 
@@ -114,8 +99,6 @@ li {
 #do-not-card {
     width: 1600px;
     height: 572px;
-    top: 1194.15px;
-    left: 153.6px;
     background-color: #FFFFFF;
     border-top: 7px solid #357B8F;
     border-radius: 16px;
