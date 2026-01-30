@@ -1,5 +1,3 @@
-import HowItHelps from "../components/site/HowItHelps";
-import CallToAction from "../components/site/CallToAction";
 import Navbar from '../components/site/Navbar'
 import Footer from '../components/site/Footer'
 import FoundAnimal from '../components/site/home_page/foundAnimalSection'
