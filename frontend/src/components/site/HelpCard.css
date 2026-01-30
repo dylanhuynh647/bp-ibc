@@ -1,0 +1,28 @@
+.help-card {
+  background-color: #F5EDEA;
+  border-radius: 8px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.help-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.help-card-title {
+  color: #2d4a3e;
+  font-size: 41.3px;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.help-card-description {
+  color: #4a5a52;
+  font-size: 30px;
+  line-height: 1.6;
+  margin: 0;
+}
