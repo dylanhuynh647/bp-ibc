@@ -1,12 +1,8 @@
 import { Router } from 'express';
-import { getPage } from '../controllers/pageController.js';
+import { getPage } from '../controllers/pageController';
 
 const router = Router();
 
-
-router.get('/sites/:site_id/pages/:page_id', getPage);
+router.get('/pages/:id', getPage);
 
 export default router;
-
-
-

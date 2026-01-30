@@ -1,0 +1,124 @@
+.editor-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  background: #eef2f7;
+}
+
+.editor-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+}
+
+.editor-sidebar__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editor-title {
+  margin: 0;
+  font-size: 22px;
+}
+
+.editor-panel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.editor-panel h3 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+}
+
+.editor-main {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editor-topbar {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.editor-heading {
+  margin: 4px 0 0 0;
+  font-size: 20px;
+}
+
+.editor-actions button {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.editor-actions button:hover {
+  background: #1d4ed8;
+}
+
+.editor-button--ghost {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+}
+
+.editor-button--ghost:hover {
+  background: #f8fafc;
+}
+
+.editor-canvas {
+  background: linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 24px;
+  flex: 1;
+}
+
+.editor-canvas__frame {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 65vh;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+.editor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editor-field label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #64748b;
+}
+
+.editor-select {
+  border: 1px solid #cbd5f5;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #ffffff;
+}
