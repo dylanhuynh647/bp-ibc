@@ -1,19 +1,24 @@
 import './homepageSection.css';
 function DoNotSection(){
     return (  
-        <section id="do-not-feed">
-            <div>
-                <div>
-                    <img src="src/assets/images/no-sign.svg" alt="no-sign"/>
-                </div>
-                <div>
-                    <h2>Please Do Not Feed or Move Wildlife</h2>
-                    <ul>
-                        <li>Not every baby animal is abandoned.</li>
-                        <li>Feeding or handling can cause serious harm.</li>
-                        <li>Moving animals can separate them from their parents.</li>
-                    </ul>
-                    <a href="EducationPage.tsx">Learn if the animal needs help</a>
+        <section>
+            <div className="homepage-white">
+                <div id="do-not-card">
+                    <div id="do-not-header">
+                        <img src="src/assets/prohibit-sign.svg" alt="no-sign"/>
+                        <h3>Please Do Not Feed or Move Wildlife</h3>
+                    </div>
+                    <div id="text-section">
+                        <ul>
+                            <li>Not every baby animal is abandoned.</li>
+                            <li>Feeding or handling can cause serious harm.</li>
+                            <li>Moving animals can separate them from their parents.</li>
+                        </ul>
+                        <div id="link-green">
+                            <a href="/education">Learn if the animal needs help</a>
+                            <img src="src/assets/green-arrow-thin.svg" alt="arrow-right"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
