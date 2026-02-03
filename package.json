@@ -27,10 +27,14 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "concurrently": "^8.2.2"
   },
   "engines": {
     "node": ">=20.0.0",
     "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "react-router-dom": "^7.13.0"
   }
 }
