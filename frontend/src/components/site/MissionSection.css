@@ -9,7 +9,7 @@
 #our-mission {
     background-image: url("../../assets/green_background.svg");
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     background-position: center;
     
     height: 33.68vw;
